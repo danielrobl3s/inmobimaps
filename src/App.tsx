@@ -43,42 +43,46 @@ const items = [
 ]
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [mapPin, setMapPin] = useState<google.maps.LatLngLiteral[]>([]);
 
   return (
     <>
       <div>
-      <Sidebar>
-      <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel>Roble sidebar</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <a href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-      </SidebarContent>
-    </Sidebar>
+        <Sidebar>
+        <SidebarContent>
+          <SidebarGroup>
+            <SidebarGroupLabel>Roble sidebar</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {items.map((item) => (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton asChild>
+                      <a href={item.url}>
+                        <item.icon />
+                        <span>{item.title}</span>
+                      </a>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        </SidebarContent>
+        </Sidebar>
       </div>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)} className="">
-          count is {count}
-        </button>
 
         <APIProvider apiKey={'AIzaSyAg5LBT4iXog9Ia7y80Q9VypbNQ-s8aceY'}>
-          <div style={{ width: '750px', height: '500px' }}> {/* Adjust height and width as needed */}
-          <Map defaultCenter={position} defaultZoom={10} mapId="DEMO_MAP_ID">
-            <AdvancedMarker position={position} />
+          <div style={{ width: '1000px', height: '750px' }}> {/* Adjust height and width as needed */}
+          <Map defaultCenter={position} defaultZoom={10} mapId="DEMO_MAP_ID" onClick={e => {
+            if (!e.detail.latLng) { return; };
+            setMapPin((prev) => [...prev, e.detail.latLng]);
+          }}>
+            {
+              mapPin?.map((pin, index) => (
+                <AdvancedMarker key={index} position={pin} />
+              ))
+            }
           </Map>
           </div>
         </APIProvider>
