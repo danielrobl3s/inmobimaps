@@ -13,6 +13,8 @@ import {
 } from "./components/ui/sidebar";
 import { MapWaypoints } from "./components/home/map-waypoints";
 
+const apikey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+
 const items = [
   {
     title: "Home",
@@ -73,3 +75,4 @@ function App() {
 }
 
 export default App;
+export { apikey}

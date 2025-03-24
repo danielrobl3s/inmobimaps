@@ -7,6 +7,9 @@ import {
   ControlPosition,
 } from "@vis.gl/react-google-maps";
 import { PlaceAutocomplete } from "./place-autocomplete";
+import { apikey } from "../../App";
+
+
 
 export const MapWaypoints = () => {
   const [mapPin, setMapPin] = useState<
@@ -35,7 +38,7 @@ export const MapWaypoints = () => {
   };
 
   return (
-    <APIProvider apiKey={"AIzaSyAg5LBT4iXog9Ia7y80Q9VypbNQ-s8aceY"}>
+    <APIProvider apiKey={apikey}>
       <div className="w-full h-full">
         <Map
           defaultCenter={{ lat: 23.6345, lng: -102.5528 }}
