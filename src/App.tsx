@@ -1,4 +1,3 @@
-import { useState } from "react";
 import "./App.css";
 import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
 import {
@@ -12,8 +11,6 @@ import {
   SidebarMenuItem,
 } from "./components/ui/sidebar";
 import { MapWaypoints } from "./components/home/map-waypoints";
-
-const apikey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
 const items = [
   {
@@ -67,7 +64,7 @@ function App() {
           </SidebarGroup>
         </SidebarContent>
       </Sidebar>
-      <main className="bg-red-500 w-full h-[calc(100vh-5rem)] rounded-lg overflow-hidden">
+      <main className="w-full h-[calc(100vh-5rem)] rounded-lg overflow-hidden">
         <MapWaypoints />
       </main>
     </>
@@ -75,4 +72,3 @@ function App() {
 }
 
 export default App;
-export { apikey}

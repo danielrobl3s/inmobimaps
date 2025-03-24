@@ -9,8 +9,6 @@ import {
 import { PlaceAutocomplete } from "./place-autocomplete";
 import { apikey } from "../../App";
 
-
-
 export const MapWaypoints = () => {
   const [mapPin, setMapPin] = useState<
     {
@@ -38,7 +36,7 @@ export const MapWaypoints = () => {
   };
 
   return (
-    <APIProvider apiKey={apikey}>
+    <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
       <div className="w-full h-full">
         <Map
           defaultCenter={{ lat: 23.6345, lng: -102.5528 }}
