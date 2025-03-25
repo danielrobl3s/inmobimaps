@@ -7,7 +7,6 @@ import {
   ControlPosition,
 } from "@vis.gl/react-google-maps";
 import { PlaceAutocomplete } from "./place-autocomplete";
-import { apikey } from "../../App";
 
 export const MapWaypoints = () => {
   const [mapPin, setMapPin] = useState<
@@ -16,24 +15,6 @@ export const MapWaypoints = () => {
       coords: google.maps.LatLngLiteral;
     }[]
   >([]);
-
-  const handlePlaceSelect = (place: google.maps.places.PlaceResult | null) => {
-    if (!place || !place.geometry?.location) return;
-
-    const coords = {
-      lat: place.geometry.location.lat(),
-      lng: place.geometry.location.lng(),
-    };
-
-    setMapPin((prev) => [
-      ...prev,
-      {
-        id: crypto.randomUUID(),
-        coords,
-        name: place.name,
-      },
-    ]);
-  };
 
   return (
     <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
@@ -57,7 +38,7 @@ export const MapWaypoints = () => {
           }}
         >
           <MapControl position={ControlPosition.TOP_CENTER}>
-            <PlaceAutocomplete onPlaceSelect={handlePlaceSelect} />
+            <PlaceAutocomplete setMapPin={setMapPin} />
           </MapControl>
           {mapPin?.map((pin, index) => (
             <AdvancedMarker
