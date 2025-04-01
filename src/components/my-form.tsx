@@ -38,7 +38,7 @@ const formSchema = z.object({
   name_2061850251: z.string().min(1),
   name_9067173528: z.string().min(1),
   name_9662235902: z.string().min(1).optional(),
-  name_6762356511: z.number(),
+  name_6762356511: z.string(),
   name_5099678897: z.string().min(1),
   name_4560854964: z.string()
 });

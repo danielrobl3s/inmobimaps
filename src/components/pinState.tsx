@@ -22,7 +22,7 @@ export const MarkerWithInfowindow = ( {lat, lng}: {lat: number, lng: number} ) =
       {infowindowOpen && (
         <InfoWindow
           anchor={marker}
-          maxWidth={200}
+          maxWidth={400}
           onCloseClick={() => setInfowindowOpen(false)}>
           <>
             <Card>
