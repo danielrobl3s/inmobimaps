@@ -1,14 +1,27 @@
-import { useState, useRef, useEffect } from "react";
-import { useMapsLibrary } from "@vis.gl/react-google-maps";
+import {
+  useState,
+  useRef,
+  useEffect,
+  type Dispatch,
+  type SetStateAction,
+} from "react";
+import { useMap, useMapsLibrary } from "@vis.gl/react-google-maps";
 
 // Place Autocomplete Component
 interface PlaceAutocompleteProps {
-  onPlaceSelect: (place: google.maps.places.PlaceResult | null) => void;
+  setMapPin: Dispatch<
+    SetStateAction<
+      {
+        id: string;
+        coords: google.maps.LatLngLiteral;
+      }[]
+    >
+  >;
 }
 
-export const PlaceAutocomplete = ({
-  onPlaceSelect,
-}: PlaceAutocompleteProps) => {
+export const PlaceAutocomplete = ({ setMapPin }: PlaceAutocompleteProps) => {
+  const map = useMap();
+
   const [placeAutocomplete, setPlaceAutocomplete] =
     useState<google.maps.places.Autocomplete | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -25,7 +38,28 @@ export const PlaceAutocomplete = ({
   useEffect(() => {
     if (!placeAutocomplete) return;
     placeAutocomplete.addListener("place_changed", () => {
-      onPlaceSelect(placeAutocomplete.getPlace());
+      const place = placeAutocomplete.getPlace();
+      if (!place || !place.geometry?.location) return;
+
+      const coords = {
+        lat: place.geometry.location.lat(),
+        lng: place.geometry.location.lng(),
+      };
+
+      setMapPin((prev) => [
+        ...prev,
+        {
+          id: crypto.randomUUID(),
+          coords,
+          name: place.name,
+        },
+      ]);
+
+      if (map) {
+        const bounds = new google.maps.LatLngBounds();
+        bounds.extend(coords);
+        map.fitBounds(bounds);
+      }
     });
 
     return () => {
@@ -33,7 +67,7 @@ export const PlaceAutocomplete = ({
         google.maps.event.clearInstanceListeners(placeAutocomplete);
       }
     };
-  }, [onPlaceSelect, placeAutocomplete]);
+  }, [placeAutocomplete, setMapPin, map]);
 
   return (
     <div className="p-4 z-10 relative">

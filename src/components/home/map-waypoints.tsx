@@ -7,12 +7,15 @@ import {
   ControlPosition,
 } from "@vis.gl/react-google-maps";
 import { PlaceAutocomplete } from "./place-autocomplete";
+<<<<<<< HEAD
 import { Card } from "../ui/card";
 import { apikey } from "../../App";
 import { useMap } from "@vis.gl/react-google-maps";
 import {MarkerWithInfowindow} from "../../components/pinState";
 
 
+=======
+>>>>>>> 410333eb12c55584518cf9ff29ec7a9efaee5d3b
 
 export const MapWaypoints = () => {
   const map = useMap();
@@ -23,6 +26,7 @@ export const MapWaypoints = () => {
     }[]
   >([]);
 
+<<<<<<< HEAD
   const [selectedPin, setSelectedPin] = useState<{
     id: string;
     coords: google.maps.LatLngLiteral;
@@ -48,8 +52,10 @@ export const MapWaypoints = () => {
     ]);
   };
 
+=======
+>>>>>>> 410333eb12c55584518cf9ff29ec7a9efaee5d3b
   return (
-    <APIProvider apiKey={apikey}>
+    <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
       <div className="w-full h-full">
         <Map
           defaultCenter={{ lat: 23.6345, lng: -102.5528 }}
@@ -70,7 +76,7 @@ export const MapWaypoints = () => {
           }}
         >
           <MapControl position={ControlPosition.TOP_CENTER}>
-            <PlaceAutocomplete onPlaceSelect={handlePlaceSelect} />
+            <PlaceAutocomplete setMapPin={setMapPin} />
           </MapControl>
           {mapPin?.map((pin, index) => (
             <MarkerWithInfowindow
