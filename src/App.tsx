@@ -12,6 +12,8 @@ import {
   SidebarMenuItem,
 } from "./components/ui/sidebar";
 import { MapWaypoints } from "./components/home/map-waypoints";
+import { MyForm } from "./components/my-form";
+import { card } from "./components/card";
 
 const apikey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
@@ -43,6 +45,7 @@ const items = [
   },
 ];
 
+
 function App() {
   return (
     <>
@@ -67,7 +70,7 @@ function App() {
           </SidebarGroup>
         </SidebarContent>
       </Sidebar>
-      <main className="bg-red-500 w-full h-[calc(100vh-5rem)] rounded-lg overflow-hidden">
+      <main className="bg-red-500 w-full rounded-lg overflow-hidden">
         <MapWaypoints />
       </main>
     </>
