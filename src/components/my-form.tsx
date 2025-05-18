@@ -43,13 +43,16 @@ const formSchema = z.object({
   name_4560854964: z.string()
 });
 
-export function MyForm() {
+export function MyForm( { address }:{address?: string} ) {
 
   const [countryName, setCountryName] = useState < string > ('Mexico')
   const [stateName, setStateName] = useState < string > ('Durango')
 
   const form = useForm < z.infer < typeof formSchema >> ({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      name_0656899817: address || '',
+    }
 
   })
 

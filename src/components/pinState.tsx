@@ -7,7 +7,7 @@ import {
 import { Card } from './ui/card';
 import { MyForm } from './my-form';
 
-export const MarkerWithInfowindow = ( {lat, lng}: {lat: number, lng: number} ) => {
+export const MarkerWithInfowindow = ( {lat, lng, address}: {lat: number, lng: number, address?: string} ) => {
   const [infowindowOpen, setInfowindowOpen] = useState(true);
   const [markerRef, marker] = useAdvancedMarkerRef();
 
@@ -19,18 +19,6 @@ export const MarkerWithInfowindow = ( {lat, lng}: {lat: number, lng: number} ) =
         position={{lat, lng}}
         title={'AdvancedMarker that opens an Infowindow when clicked.'}
       />
-      {infowindowOpen && (
-        <InfoWindow
-          anchor={marker}
-          maxWidth={400}
-          onCloseClick={() => setInfowindowOpen(false)}>
-          <>
-            <Card>
-              <MyForm />
-            </Card>
-          </>
-        </InfoWindow>
-      )}
     </>
   );
 };

@@ -8,18 +8,27 @@ import {
 } from "@vis.gl/react-google-maps";
 import { PlaceAutocomplete } from "./place-autocomplete";
 import { Card } from "../ui/card";
-import { apikey } from "../../App";
+import { apikey, useMapContext } from "../../App";
 import { useMap } from "@vis.gl/react-google-maps";
 import {MarkerWithInfowindow} from "../../components/pinState";
+import { NavMain } from '../nav-main';
+import { useSidebar } from "../ui/sidebar";
+
+
+
 
 
 
 export const MapWaypoints = () => {
   const map = useMap();
+  const { setMap } = useMapContext();
+  const { open, setOpen } = useSidebar();
+
   const [mapPin, setMapPin] = useState<
     {
       id: string;
       coords: google.maps.LatLngLiteral;
+      name?: string;
     }[]
   >([]);
 
@@ -33,6 +42,8 @@ export const MapWaypoints = () => {
   const handlePlaceSelect = (place: google.maps.places.PlaceResult | null) => {
     if (!place || !place.geometry?.location) return;
 
+    console.log(place)
+
     const coords = {
       lat: place.geometry.location.lat(),
       lng: place.geometry.location.lng(),
@@ -43,9 +54,15 @@ export const MapWaypoints = () => {
       {
         id: crypto.randomUUID(),
         coords,
-        name: place.name,
+        name: place.formatted_address,
       },
     ]);
+
+    setMap({id: crypto.randomUUID(), coords, name: place.formatted_address});
+    if (!open) {
+      setOpen(true);
+    }
+
   };
 
   return (
@@ -55,6 +72,7 @@ export const MapWaypoints = () => {
           defaultCenter={{ lat: 23.6345, lng: -102.5528 }}
           defaultZoom={6}
           mapId="DEMO_MAP_ID"
+          style={{ width: "100%", height: "100%" }}
           onClick={(e) => {
             const coords = e.detail.latLng;
             if (!coords) {
@@ -67,6 +85,11 @@ export const MapWaypoints = () => {
                 coords,
               },
             ]);
+
+            setMap({id: crypto.randomUUID(), coords, name: ""});
+            if (!open) {
+              setOpen(true);
+            }
           }}
         >
           <MapControl position={ControlPosition.TOP_CENTER}>
@@ -76,6 +99,7 @@ export const MapWaypoints = () => {
             <MarkerWithInfowindow
             lat={pin.coords.lat}
             lng={pin.coords.lng}
+            address ={pin.name}
             />
           ))}
         </Map>

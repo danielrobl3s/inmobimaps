@@ -82,3 +82,10 @@
     @apply bg-background text-foreground;
   }
 }
+
+body, html {
+  margin: 0;
+  padding: 0;
+  /* overflow: hidden; /* Disables scrolling */
+  /*height: 100vh;   /* Full viewport height */
+}
